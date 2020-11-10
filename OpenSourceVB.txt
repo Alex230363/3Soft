@@ -19,27 +19,21 @@ Public Class Form1
             Dim FileName As String = OpenFileDialog.FileName
             xlApp = New Excel.Application
             xlWorkBook = xlApp.Workbooks.Open(FileName)
-            xlWorkSheet = xlWorkBook.Worksheets("Лист1")
-            'Определение количества строк в таблице
+            xlWorkSheet = xlWorkBook.Worksheets("Р›РёСЃС‚1")
             For i = 1 To 256
                 If xlWorkSheet.Cells(i, 1).value Is Nothing Then
                     rs = i - 1
                     i = 257
                 End If
             Next
-            ' экспорт таблицы в DataGridView
-            For i = 1 To rs
+             For i = 1 To rs
                 DGV.Rows.Add(xlWorkSheet.Cells(i, 1).value, xlWorkSheet.Cells(i, 2).value, xlWorkSheet.Cells(i, 3).value, xlWorkSheet.Cells(i, 4).value)
             Next
-            ' закрыть таблицу Exel
-            ' MsgBox("Диапазон таблицы:" + cs.ToString + "x" + rs.ToString)
-            ' xlWorkSheet.Cells(2, 2) = "http://vb.net-informations.com"
             xlWorkBook.Close()
             xlApp.Quit()
             releaseObject(xlApp)
             releaseObject(xlWorkBook)
             releaseObject(xlWorkSheet)
-            ' сортировка DataGridView по шифру профиля
             DGV.Sort(DGV.Columns(0), System.ComponentModel.ListSortDirection.Ascending)
             DGV.Refresh()
             rs = DGV.RowCount
@@ -51,10 +45,6 @@ Public Class Form1
         DGV.Sort(DGV.Columns(0), System.ComponentModel.ListSortDirection.Ascending)
         DGV.Refresh()
         TextBox5.Clear()
-        ' формированик массивов: '
-        ' len - массив деталей;
-        ' ind - диапазоны элементов по шифрам профилей;
-        ' names - шифры профилей.
         Dim nc, k, l, total As Integer
         Dim s As String
         Button2.Enabled = False
@@ -74,28 +64,21 @@ Public Class Form1
                     len(k) = Val(CType(DGV.Rows(i).Cells(1).Value, String))
                     nick(k) = CType(DGV.Rows(i).Cells(3).Value, String)
                     If len(k) + Val(TextBox2.Text) >= Val(TextBox1.Text) Then
-                        MsgBox("Длина больше заданной " + s + " L=" + len(k).ToString + "+" + TextBox2.Text + ">" + TextBox1.Text)
+                        MsgBox("Р”Р»РёРЅР° Р±РѕР»СЊС€Рµ Р·Р°РґР°РЅРЅРѕР№ " + s + " L=" + len(k).ToString + "+" + TextBox2.Text + ">" + TextBox1.Text)
                         Return
                     End If
-                    'TextBox5.AppendText(vbCrLf + s + vbTab + " | длина " + CType(DGV.Rows(i).Cells(1).Value, String) + vbTab + " | индекс " + k.ToString)
                     k += 1
                 Next
                 If i < rs - 1 Then i += 1
             Loop
-            'TextBox5.AppendText(vbCrLf + "Профиль " + s + vbTab + " | Количество деталей " + nc.ToString)
             total = total + nc
             nc = 0
             j += 1
             ind(j) = k
         Loop
-        'TextBox5.AppendText(vbCrLf + "Позиций " + j.ToString)
-        'For i = 0 To j
-        'TextBox5.AppendText(vbCrLf + "индекс " + i.ToString + " " + ind(i).ToString)
-        'Next
         Dim SDelta As Integer
         Dim SIndex As Integer
         Dim SDets(2047) As Integer
-
         Dim NDetsmin As Integer
         Dim NInDetsMin(2047) As Integer
         Dim DeltaMin(2047) As Integer
@@ -176,8 +159,7 @@ Public Class Form1
                 Next
                 ProgressBar1.Value = Itt * 100 / (ittmax * NLens)
             Next
-            TextBox5.AppendText(vbCrLf + " Результат:" + names(l) + " отходы:" + resultmin.ToString("f3") + ", кол-во заготовок:" + (NDetsmin + 1).ToString + ", деталей:" + NLens.ToString)
-            ' сортировка длин деталей в заготовке
+            TextBox5.AppendText(vbCrLf + " Р РµР·СѓР»СЊС‚Р°С‚:" + names(l) + " РѕС‚С…РѕРґС‹:" + resultmin.ToString("f3") + ", РєРѕР»-РІРѕ Р·Р°РіРѕС‚РѕРІРѕРє:" + (NDetsmin + 1).ToString + ", РґРµС‚Р°Р»РµР№:" + NLens.ToString)
             Dim t2 As Integer
             For i = 0 To NDetsmin
                 For k = 0 To NInDetsMin(i) - 1
@@ -190,11 +172,10 @@ Public Class Form1
                     Next
                 Next
             Next
-            ' сортировка заготовок по длинам первого элемента
             For i = 0 To NDetsmin
                 For j = i To NDetsmin
                     If (len(CDetsMin(j, 0) + ind(l)) * 2047 - NInDetsMin(j)) > (len(CDetsMin(i, 0) + ind(l)) * 2047 - NInDetsMin(i)) Then
-                        ' копирование массивов
+                        ' РєРѕРїРёСЂРѕРІР°РЅРёРµ РјР°СЃСЃРёРІРѕРІ
                         For k = 0 To NInDetsMin(i) - 1
                             SDets(k) = CDetsMin(i, k)
                         Next
@@ -214,7 +195,7 @@ Public Class Form1
                 Next
             Next
             For i = 0 To NDetsmin
-                TextBox5.AppendText(vbCrLf + " деталь:" + (i + 1).ToString + vbTab + ", остаток:" + DeltaMin(i).ToString)
+                TextBox5.AppendText(vbCrLf + " РґРµС‚Р°Р»СЊ:" + (i + 1).ToString + vbTab + ", РѕСЃС‚Р°С‚РѕРє:" + DeltaMin(i).ToString)
                 For j = 0 To NInDetsMin(i) - 1
                     TextBox5.AppendText(vbTab + "   " + Strings.Left(nick(CDetsMin(i, j) + ind(l)), 4))
                 Next
@@ -226,7 +207,7 @@ Public Class Form1
             TextBox5.AppendText(vbCrLf)
         Next
         ProgressBar1.Visible = False
-        TextBox5.AppendText(vbCrLf + " Расчет завершен")
+        TextBox5.AppendText(vbCrLf + " Р Р°СЃС‡РµС‚ Р·Р°РІРµСЂС€РµРЅ")
         Button2.Enabled = rs - 1 > 0
     End Sub
 
@@ -260,7 +241,6 @@ Public Class Form1
 End Class
 
 Public Class Form2
-
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
         Me.Hide()
     End Sub
