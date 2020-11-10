@@ -1,5 +1,5 @@
 # 3Soft
-Some optimization projects
-Cutting optimization program for single dimension 
-Visual Studio 2010
-Release #1 (russian)
+\Some optimization projects\
+\Cutting optimization for single dimension\
+\Visual Studio 2010\
+\Release #1 (russian)\
