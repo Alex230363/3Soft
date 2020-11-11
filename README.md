@@ -5,4 +5,4 @@
 \WA5.exe Release #1 (russian)\
 \OpenSourceVB.txt (russian)\
 \3Soft.exe Release #1 (english)\
-\OpenSourceEng.txt (russian)\
+\OpenSourceEng.txt (english)\
